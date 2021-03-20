@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aislânio</title>
+</head>
+<style type="text/css">
+  body{
+    display: flex;
+  }
+  canvas{
+    border: solid 1px black;
+  }
+</style>
+<body>
+  <canvas width="600" height="400"></canvas>
+  
+  <script type="text/javascript">
+    let up = 87, down = 83,left = 65 , right = 68;
+    let moveEsquerda = false,moveDireita = false,moveCima = false,moveBaixo = false;
+    let canvas = document.querySelector("canvas");
+    let ctx = canvas.getContext("2d");
+    let obj = {
+      x:10,
+      y:10,
+    }
+    update();
+    window.addEventListener("keydown",keydowHandler);
+    window.addEventListener("keyup",keyupHandler);
+    function keydowHandler(e){
+      
+      let key =  e.keyCode;
+      if(key  === up && key != down){
+        moveCima = true;
+      };
+      if(key  === down && key != up){
+        moveBaixo = true;
+      };
+      if(key  === left && key != right) {
+        moveEsquerda =true
+      };
+      if(key  === right && key != left){
+       moveDireita = true;
+      };
+    };
+
+    function keyupHandler(e){
+      
+      let key =  e.keyCode;
+      if(key  === up && key != down){
+        moveCima = false;
+      };
+      if(key  === down && key != up){
+        moveBaixo = false;
+      };
+      if(key  === left && key != right) {
+        moveEsquerda = false;
+      };
+      if(key  === right && key != left){
+       moveDireita = false;
+      };
+    };
+
+    function move(){
+      if(moveCima){
+        obj.y--;
+
+      }
+      if(moveBaixo){
+        obj.y++;
+      }
+      if(moveDireita){
+        obj.x++;
+      }
+      if (moveEsquerda) {
+        obj.x--;
+      }
+    }
+    
+    function render(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.fillRect(obj.x,obj.y,50,50)
+    };
+
+    function update(){
+      requestAnimationFrame(update,canvas);
+      move();
+      render()
+    }
+  </script>
+</body>
+</html>
